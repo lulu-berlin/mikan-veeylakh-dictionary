@@ -11,6 +11,7 @@ const Container = styled.div`
   margin: 0 auto;
   max-width: 1080px;
   padding: 2rem;
+  direction: rtl;
 `;
 
 const Title = styled.h1`
@@ -25,7 +26,7 @@ const Tagline = styled.h2`
   color: ${props => props.theme.colors.blue};
 `;
 
-const Layout: React.FC = ({ children }) => {
+export const Layout: React.FC = ({ children }) => {
   const data = useStaticQuery(graphql`
     query SiteTitleQuery {
       site {
@@ -45,15 +46,13 @@ const Layout: React.FC = ({ children }) => {
         <GlobalStyles />
         <CSSDebugger />
         <Link to="/">
-          <Title>{title.toUpperCase()}</Title>
+          <Title>{title}</Title>
         </Link>
         <Tagline>{description}</Tagline>
         <br />
         <main>{children}</main>
-        <Footer />
       </Container>
     </ThemeProvider>
   );
 };
 
-export { Layout };

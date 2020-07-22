@@ -1,40 +1,8 @@
-# gatsby-starter-typescript-deluxe 🌟
+# mikan veeylakh dictionary
 
-### An opinionated starter library for creating React applications with Gatsby (v2) and TypeScript.
+### A German-Hebrew dictionary
 
-### [View Demo](https://gatsby-starter-typescript-deluxe.netlify.com) [![Netlify Status](https://api.netlify.com/api/v1/badges/741aaab2-8497-431c-8b59-7f675856de77/deploy-status)](https://app.netlify.com/sites/gatsby-starter-typescript-deluxe/deploys)
-
-This starter library is pre-configured with the following integrations:
-
-- **TypeScript** for type-safe code.
-- **Styled-Components** for all your styles.
-- **modern-css-reset** for a reset of sensible default styles.
-- **Framer Motion** for awesome animations.
-- **gatsby-image and gatsby-transformer-sharp** for optimized images.
-- **gatsby-plugin-manifest / SEO component** for an SEO-friendly PWA.
-- **Storybook with add-ons** for showing off your awesome components.
-- **Jest and React Testing library** for snapshots and unit tests.
-- **ESLint (with TSLint and Prettier)** to make your code look its best.
-- **React Axe and React A11y for accessibility** so that your site is awesome for everyone.
-
-## Installation
-
-You will need to have `node` and `npm` installed on your computer.
-
-You can either use `npx` or install the `gatsby-cli` globally.
-
-The `npx` way:
-
-```sh
-npx gatsby new my-site https://github.com/gojutin/gatsby-starter-typescript-deluxe
-```
-
-or the global way:
-
-```sh
-npm i -g gatsby-cli
-gatsby new my-site https://github.com/gojutin/gatsby-starter-typescript-deluxe
-```
+It's a Gatsby site based on the [gatsby-starter-typescript-deluxe](https://www.gatsbyjs.org/starters/gojutin/gatsby-starter-typescript-deluxe/) starter.
 
 ## Usage
 
@@ -188,15 +156,3 @@ Compile a production build to the `/public` directory.
 ```sh
 npm run build
 ```
-
-## Lighthouse Audit Score 💯
-
-<img src="https://res.cloudinary.com/gojutin/image/upload/v1568660306/gatsby-starter-typescript-deluxe/gatsby-starter-typescript-deluxe-lighthouse-audit.gif" style="max-width: 100%;" alt="Lighthouse Score" />
-
-## TODOS
-
-- Write more robust unit tests for all components and custom hook.
-- Possibly add support for MDX and markdown.
-- Add more Storybook add-ons with more component demos.
-
-That's about it. Now, build something awesome 😀

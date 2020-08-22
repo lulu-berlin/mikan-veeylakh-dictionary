@@ -1,5 +1,5 @@
 [package]
-name = "mvd-model"
+name = "sophia-ns-lemon"
 version = "0.1.0"
 authors = ["Ya'ar Hever <yaarhever@gmail.com>"]
 edition = "2018"
@@ -7,6 +7,4 @@ edition = "2018"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-
-[dev-dependencies]
-"testcontainers" = "0.10.0"
+"sophia_api" = "0.6.2"

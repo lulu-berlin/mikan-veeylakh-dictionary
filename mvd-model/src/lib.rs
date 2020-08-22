@@ -1,5 +1,5 @@
 #[cfg(test)]
 mod test {
     #[test]
-    fn nothing_to_test() {}
+    fn nothing_to_test_yet() {}
 }

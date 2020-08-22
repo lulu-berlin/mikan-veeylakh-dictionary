@@ -1,4 +1,5 @@
 use super::sparql::SparqlResults;
+use crate::support::sparql::SparqlDBClient;
 use lazy_static::lazy_static;
 use testcontainers::*;
 
@@ -25,9 +26,9 @@ impl Drop for OxigraphContainer {
     }
 }
 
-impl OxigraphContainer {
+impl SparqlDBClient for OxigraphContainer {
     /// Spawn a docker container with oxigraph server (with `RocksDB` key-value store).
-    pub fn spawn() -> Self {
+    fn spawn() -> Self {
         // See the README of `oxigraph`
         let image = testcontainers::images::generic::GenericImage::new("oxigraph/oxigraph")
             .with_mapped_port((7878, 7878))
@@ -45,10 +46,7 @@ impl OxigraphContainer {
     }
 
     /// Make a SPARQL query.
-    pub fn sparql_query<'a>(
-        &self,
-        query: &str,
-    ) -> Result<SparqlResults, Box<dyn std::error::Error>> {
+    fn sparql_query(&self, query: &str) -> Result<SparqlResults, Box<dyn std::error::Error>> {
         let host_port = self.0.get_host_port(7878).unwrap();
         let url = format!("http://localhost:{}/query", host_port);
         let client = reqwest::blocking::Client::new();

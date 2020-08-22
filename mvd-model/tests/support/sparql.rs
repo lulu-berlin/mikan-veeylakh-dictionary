@@ -1,6 +1,12 @@
 use serde::Deserialize;
 use std::collections::{HashMap, HashSet};
 
+/// A database that can be spawned and accept SPARQL queries.
+pub trait SparqlDBClient {
+    fn spawn() -> Self;
+    fn sparql_query(&self, query: &str) -> Result<SparqlResults, Box<dyn std::error::Error>>;
+}
+
 /// The JSON object returned by a SPARQL query.
 #[derive(Deserialize, Default, PartialEq, Debug)]
 pub(crate) struct SparqlResults {

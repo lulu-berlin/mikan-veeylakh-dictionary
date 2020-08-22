@@ -1,5 +1,5 @@
 mod support;
-use support::{oxigraph_docker::OxigraphContainer, sparql::SparqlResults};
+use support::{oxigraph_docker::OxigraphContainer, sparql::SparqlDBClient, sparql::SparqlResults};
 
 #[test]
 fn start_oxigraph_docker() -> Result<(), Box<dyn std::error::Error>> {

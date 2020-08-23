@@ -1,5 +1,7 @@
 use super::sparql::{SparqlDBClient, SparqlQueryError};
 use oxigraph::{
+    io::GraphFormat,
+    model::GraphName,
     sparql::{QueryOptions, QueryResults, QueryResultsFormat, QuerySolutionIter},
     MemoryStore,
 };
@@ -25,5 +27,16 @@ impl SparqlDBClient for OxigraphMemoryStore {
         } else {
             Err(Box::new(SparqlQueryError))
         }
+    }
+
+    fn insert_turtle(&self, turtle: &str) -> Result<(), Box<dyn std::error::Error>> {
+        self.0
+            .load_graph(
+                std::io::Cursor::new(turtle),
+                GraphFormat::Turtle,
+                &GraphName::DefaultGraph,
+                None,
+            )
+            .map_err(|e| e.into())
     }
 }

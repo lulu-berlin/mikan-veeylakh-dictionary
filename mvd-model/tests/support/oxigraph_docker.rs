@@ -73,4 +73,21 @@ impl SparqlDBClient for OxigraphContainer {
             Err(Box::new(SparqlQueryError))
         }
     }
+
+    /// Insert graph to the database from a Turtle encoded string.
+    fn insert_turtle(&self, turtle: &str) -> Result<(), Box<dyn std::error::Error>> {
+        let host_port = self.0.get_host_port(7878).unwrap();
+        let url = format!("http://localhost:{}", host_port);
+        let client = reqwest::blocking::Client::new();
+        // Based on the example in the README of `oxigraph`:
+        //
+        // curl http://localhost:7878 -H 'Content-Type: application/x-turtle' -d@./data.ttl
+        client
+            .post(&url)
+            .header("Content-Type", "application/x-turtle")
+            .body(turtle.to_string())
+            .send()
+            .map(|_| ())
+            .map_err(|e| e.into())
+    }
 }

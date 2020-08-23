@@ -10,8 +10,8 @@ lazy_static! {
 }
 
 /// A wrapper around a GenericImage container.
-pub struct OxigraphContainer(
-    testcontainers::Container<
+pub(crate) struct OxigraphContainer(
+    pub(crate)  testcontainers::Container<
         'static,
         testcontainers::clients::Cli,
         testcontainers::images::generic::GenericImage,

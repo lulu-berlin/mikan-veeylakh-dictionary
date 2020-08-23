@@ -504,6 +504,7 @@ checksum = "342a407881dbd200f13a08ff8a5413232e035ed7ba56dba8c81137e3afce4f84"
 name = "mvd-model"
 version = "0.1.0"
 dependencies = [
+ "lazy_static",
  "reqwest",
  "serde",
  "testcontainers",

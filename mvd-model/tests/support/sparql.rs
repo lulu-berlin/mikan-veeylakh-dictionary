@@ -1,10 +1,15 @@
+use oxigraph::sparql::QuerySolutionIter;
 use serde::Deserialize;
-use std::collections::{HashMap, HashSet};
+use std::{
+    collections::{HashMap, HashSet},
+    error::Error,
+    fmt,
+};
 
 /// A database that can be spawned and accept SPARQL queries.
 pub trait SparqlDBClient {
     fn spawn() -> Self;
-    fn sparql_query(&self, query: &str) -> Result<SparqlResults, Box<dyn std::error::Error>>;
+    fn sparql_query(&self, query: &str) -> Result<QuerySolutionIter, Box<dyn Error>>;
 }
 
 /// The JSON object returned by a SPARQL query.
@@ -45,3 +50,14 @@ impl SparqlResults {
         }
     }
 }
+
+#[derive(Debug)]
+pub struct SparqlQueryError;
+
+impl fmt::Display for SparqlQueryError {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        write!(f, "SPARQL query error")
+    }
+}
+
+impl Error for SparqlQueryError {}

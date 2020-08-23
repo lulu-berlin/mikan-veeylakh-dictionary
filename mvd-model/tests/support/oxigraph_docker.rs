@@ -1,6 +1,6 @@
-use super::sparql::SparqlResults;
-use crate::support::sparql::SparqlDBClient;
+use super::sparql::{SparqlDBClient, SparqlQueryError};
 use lazy_static::lazy_static;
+use oxigraph::sparql::{QueryResults, QueryResultsFormat, QuerySolutionIter};
 use testcontainers::*;
 
 lazy_static! {
@@ -46,7 +46,7 @@ impl SparqlDBClient for OxigraphContainer {
     }
 
     /// Make a SPARQL query.
-    fn sparql_query(&self, query: &str) -> Result<SparqlResults, Box<dyn std::error::Error>> {
+    fn sparql_query(&self, query: &str) -> Result<QuerySolutionIter, Box<dyn std::error::Error>> {
         let host_port = self.0.get_host_port(7878).unwrap();
         let url = format!("http://localhost:{}/query", host_port);
         let client = reqwest::blocking::Client::new();
@@ -57,13 +57,20 @@ impl SparqlDBClient for OxigraphContainer {
         //      -H 'Content-Type: application/sparql-query' \
         //      --data 'SELECT * WHERE { ?s ?p ?o } LIMIT 10' \
         //      http://localhost:7878/query
-        let response = client
+        let xml_response = client
             .post(&url)
-            .header("Accept", "application/sparql-results+json")
+            .header("Accept", "application/sparql-results+xml")
             .header("Content-Type", "application/sparql-query")
             .body(query.to_string())
             .send()?
-            .json::<SparqlResults>()?;
-        Ok(response)
+            .text()?;
+
+        if let QueryResults::Solutions(solutions) =
+            QueryResults::read(std::io::Cursor::new(xml_response), QueryResultsFormat::Xml)?
+        {
+            Ok(solutions)
+        } else {
+            Err(Box::new(SparqlQueryError))
+        }
     }
 }

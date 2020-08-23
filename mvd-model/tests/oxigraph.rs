@@ -1,18 +1,23 @@
 mod support;
-use support::{oxigraph_docker::OxigraphContainer, sparql::SparqlDBClient, sparql::SparqlResults};
+use oxigraph::sparql::Variable;
+use support::{oxigraph_docker::OxigraphContainer, sparql::SparqlDBClient};
 
 #[test]
 fn start_oxigraph_docker() -> Result<(), Box<dyn std::error::Error>> {
     let oxigraph = OxigraphContainer::spawn();
 
-    assert_eq!(
-        oxigraph.sparql_query(
-            r"SELECT *
+    let solutions = oxigraph.sparql_query(
+        r"SELECT *
             WHERE { ?s ?p ?o }
-            LIMIT 10"
-        )?,
-        SparqlResults::new().with_vars(vec!["s", "p", "o"])
-    );
+            LIMIT 10",
+    )?;
+
+    let variables = solutions.variables();
+
+    assert_eq!(variables.len(), 3);
+    assert!(variables.iter().any(|v| *v == Variable::new("s")));
+    assert!(variables.iter().any(|v| *v == Variable::new("p")));
+    assert!(variables.iter().any(|v| *v == Variable::new("o")));
 
     Ok(())
 }
